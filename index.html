@@ -1,1 +1,88 @@
-cool calculator(s) by Isaac coming soon
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flying Squirrel Distance Calculator</title>
+    <link rel="icon" href="favicon.ico" />
+    <style type="text/css">
+      body {
+        background-color: rgba(126, 126, 200, 1);
+      }
+      h1 {
+        color: #c1c100;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Flying Squirrel Distance Calculator</h1>
+    <p>
+      This is a calculator that determines the distance a human-sized flying
+      squirrel will fly given a set speed and starting angle
+    </p>
+
+    <p>
+      For this version, we assume the flying squirrel is massless and there is
+      no air resistance. We will add those factors in a future version. We
+      referenced
+      <a href="https://www.youtube.com/watch?v=8eEoWQ_KznM"
+        >this educational video</a
+      >
+      for these calculations.
+    </p>
+
+    <form>
+      <label
+        >Speed:
+        <input
+          id="sq-speed"
+          name="speed"
+          type="number"
+          value="533.3"
+          step="any"
+          in="0"
+        />
+        ft/s</label
+      ><br />
+      <label
+        >Angle:
+        <input
+          id="sq-angle"
+          name="angle"
+          type="number"
+          value="30"
+          min="0"
+          max="180"
+        />
+        deg</label
+      ><br />
+
+      <button>Update</button>
+
+      <h2 id="sq-distance">Distance: 0 ft</h2>
+
+      <script>
+        function updateDistance(e) {
+          e.preventDefault();
+          console.log(e);
+
+          var speed = document.getElementById("sq-speed").value; // ft/s
+          var angle = document.getElementById("sq-angle").value;
+          var distElement = document.getElementById("sq-distance");
+
+          var speed_m_s = speed * 0.3048; // convert to m/s
+          var theta = (angle * Math.PI) / 180;
+          var height =
+            (Math.pow(speed_m_s, 2) * Math.pow(Math.sin(theta), 2)) / (2 * 9.8);
+
+          var range = (Math.pow(speed_m_s, 2) * Math.sin(2 * theta)) / 9.8;
+          var dist = range / 0.3048; // back to feet
+
+          //distElement.innerHTML = "Height: " + height + " m";
+          distElement.innerHTML = "Distance: " + dist + " ft";
+        }
+
+        document.forms[0].addEventListener("submit", updateDistance);
+      </script>
+    </form>
+  </body>
+</html>
